@@ -9,7 +9,7 @@ import java.util.PriorityQueue;
 
 import application.Maze;
 
-public class Magic {	
+public class Magic extends Greedy{	
 	// Keeps up with the child-parent trail so we can recreate the chosen path
 		HashMap<Point,Point> childParent;
 
