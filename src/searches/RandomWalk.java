@@ -14,10 +14,11 @@ public class RandomWalk extends SearchAlgorithm{
 	private Random rand;
 	
 	public RandomWalk(Maze mazeBlocks, Point startPoint, Point goalPoint){
-		maze = mazeBlocks;
-		goal = goalPoint;
-		current = startPoint;
-		maze.markPath(current);
+		//maze = mazeBlocks;
+		//goal = goalPoint;
+		//current = startPoint;
+		//maze.markPath(current);
+		super(mazeBlocks, startPoint, goalPoint);
 		next = startPoint;
 		rand = new Random();
 	}

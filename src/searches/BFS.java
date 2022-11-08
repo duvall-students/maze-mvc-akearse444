@@ -26,6 +26,7 @@ public class BFS extends SearchAlgorithm{
 		data.add(startPoint);
 		childParent = new HashMap<>();*/
 		super(mazeBlocks, startPoint, goalPoint);
+		childParent = new HashMap<>();
 	}
 
 	/*
