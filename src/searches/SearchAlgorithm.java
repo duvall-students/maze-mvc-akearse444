@@ -4,34 +4,29 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Queue;
-import java.util.Stack;
 
 import application.Maze;
 
 public abstract class SearchAlgorithm {
 
-	private Maze maze;					// The maze being solved
-	private Point goal;					// The goal Point - will let us know when search is successful
-	private Collection<Point> data;		// Data structure used to keep "fringe" points
-	private boolean searchOver = false;	// Is search done?
-	private boolean searchResult = false;	// Was it successful?
-	private Point current;				// Current point being explored
+	protected Maze maze;					// The maze being solved
+	protected Point goal;					// The goal Point - will let us know when search is successful
+	protected Collection<Point> data;		// Data structure used to keep "fringe" points
+	protected boolean searchOver = false;	// Is search done?
+	protected boolean searchResult = false;	// Was it successful?
+	protected Point current;				// Current point being explored
 
 	public SearchAlgorithm(Maze mazeBlocks, Point startPoint, Point goalPoint) {
-		//initialize instance variables
-		//maze = mazeBlocks;
-		//current = startPoint;
-		//goal = goalPoint; 
-		this.maze = mazeBlocks;
-		this.goal = goalPoint;
-		this.current = startPoint;
+		maze = mazeBlocks;
+		goal = goalPoint;
+		current = startPoint;
+		maze.markPath(current);
 	}
 	
 	public boolean step(){
 		// Don't keep computing after goal is reached or determined impossible.
-		if(searchOver){
-			return searchResult;
+		if (searchOver) {
+			return whenSearchOver();
 		}
 		// Find possible next steps
 		Collection<Point> neighbors = getNeighbors();
@@ -45,8 +40,7 @@ public abstract class SearchAlgorithm {
 		// if no next step is found
 		else{	
 			maze.markVisited(current);
-			Stack<Point> stack = (Stack<Point>)data;
-			stack.pop();
+			whenNextStateNull(next);
 		}
 		resetCurrent();
 		checkSearchOver();
@@ -83,7 +77,7 @@ public abstract class SearchAlgorithm {
 	 * 
 	 * It chooses the first point it finds that is empty.
 	 */
-	private Point chooseNeighbor(Collection<Point> neighbors){
+	protected Point chooseNeighbor(Collection<Point> neighbors){
 		for(Point p: neighbors){
 			if(maze.get(p)==Maze.EMPTY){
 				return p;
@@ -92,14 +86,22 @@ public abstract class SearchAlgorithm {
 		return null;
 	}
 	
-	private void recordLink(Point next) {
+	//what to do when search is over
+	protected boolean whenSearchOver() {
+		return searchResult;
+	}
+	
+	//what to do if no next step is found
+	protected void whenNextStateNull(Point next) {
 		
 	}
 	
-	private void resetCurrent() {
+	protected void recordLink(Point next) {
 		
 	}
-	
+
+	protected void resetCurrent() {
+	}
 	/*
 	 * Search is over and unsuccessful if there are no more fringe points to consider.
 	 * Search is over and successful if the current point is the same as the goal.

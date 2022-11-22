@@ -1,18 +1,10 @@
 package application;
 
 import java.awt.Point;
-
-import searches.BFS;
-import searches.DFS;
-import searches.Greedy;
-import searches.Magic;
-import searches.RandomWalk;
 import searches.SearchAlgorithm;
+import searches.SearchFactory;
 
 public class MazeController {
-
-	private final int NUM_ROWS = 31; 
-	private final int NUM_COLUMNS = 41;
 
 	/* 
 	 * Logic of the program
@@ -25,7 +17,7 @@ public class MazeController {
 	//private Magic magic;
 	//private String search = "";		// This string tells which algorithm is currently chosen.  Anything other than 
 	// the implemented search class names will result in no search happening.
-	SearchAlgorithm search;
+	private SearchAlgorithm search;
 	
 	// Where to start and stop the search
 	private Point start;
@@ -33,28 +25,19 @@ public class MazeController {
 
 	// The maze to search
 	private Maze maze;
-	private MazeDisplay mazeDisplay;
+	MazeDisplay mazeDisplay;
+	
+	SearchFactory searchFactory;
 
-	public MazeController(MazeDisplay view) {
+	public MazeController(int rows, int cols, MazeDisplay view) {
 		// Initializing logic state
-		int numRows = NUM_ROWS;
-		int numColumns = NUM_COLUMNS;
+		int numRows = rows;
+		int numColumns = cols;
 		start = new Point(1,1);
 		goal = new Point(numRows-2, numColumns-2);
 		maze = new Maze(numRows, numColumns);
 		mazeDisplay = view;
-	}
-
-	public Point getMazeDimensions() {
-		return new Point(NUM_ROWS, NUM_COLUMNS);
-	}
-
-	public int getNumRows() {
-		return NUM_ROWS;
-	}
-	
-	public int getNumCols() {
-		return NUM_COLUMNS;
+		searchFactory = new SearchFactory();
 	}
 
 	/*
@@ -63,8 +46,8 @@ public class MazeController {
 	 */
 	public void newMaze() {
 		maze.createMaze(maze.getNumRows(),maze.getNumCols());
-		search = "";
 		mazeDisplay.redraw();
+		search = null;
 	}
 
 	/*
@@ -79,17 +62,10 @@ public class MazeController {
 
 	public void startSearch(String searchType) {
 		maze.reColorMaze();
-		search = searchType;
 
 		// Restart the search.  Since I don't know 
 		// which one, I'll restart all of them.
-
-
-		search = new BFS(maze, start, goal);	// start in upper left and end in lower right corner
-		search = new DFS(maze, start, goal);
-		search = new Greedy(maze, start, goal);
-		search = new RandomWalk(maze, start, goal);
-		search = new Magic(maze, start, goal);
+		search = searchFactory.makeSearch(searchType, maze, goal, goal);
 	}
 
 
