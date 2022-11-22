@@ -92,16 +92,11 @@ public abstract class SearchAlgorithm {
 	}
 	
 	//what to do if no next step is found
-	protected void whenNextStateNull(Point next) {
-		
-	}
+	protected abstract void whenNextStateNull(Point next);
 	
-	protected void recordLink(Point next) {
-		
-	}
+	protected abstract void recordLink(Point next);
 
-	protected void resetCurrent() {
-	}
+	protected abstract void resetCurrent();
 	/*
 	 * Search is over and unsuccessful if there are no more fringe points to consider.
 	 * Search is over and successful if the current point is the same as the goal.

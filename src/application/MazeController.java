@@ -25,9 +25,9 @@ public class MazeController {
 
 	// The maze to search
 	private Maze maze;
-	MazeDisplay mazeDisplay;
+	private MazeDisplay mazeDisplay;
 	
-	SearchFactory searchFactory;
+	private SearchFactory searchFactory;
 
 	public MazeController(int rows, int cols, MazeDisplay view) {
 		// Initializing logic state
@@ -47,7 +47,6 @@ public class MazeController {
 	public void newMaze() {
 		maze.createMaze(maze.getNumRows(),maze.getNumCols());
 		mazeDisplay.redraw();
-		search = null;
 	}
 
 	/*

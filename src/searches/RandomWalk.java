@@ -47,4 +47,22 @@ public class RandomWalk extends SearchAlgorithm{
 		}
 		return null;
 	}
+
+	@Override
+	protected void whenNextStateNull(Point next) {
+		maze.markVisited(current);
+		
+	}
+
+	@Override
+	protected void recordLink(Point next) {
+		this.next = next;
+		maze.markVisited(current);
+		
+	}
+
+	@Override
+	protected void resetCurrent() {
+		current = next;
+	}
 }
