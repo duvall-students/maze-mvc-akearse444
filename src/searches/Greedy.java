@@ -12,7 +12,7 @@ import application.Maze;
 public class Greedy extends BFS{	
 
 	// Keeps up with the child-parent trail so we can recreate the chosen path
-	HashMap<Point,Point> childParent;
+	//HashMap<Point,Point> childParent;
 
 
 	public Greedy(Maze mazeBlocks, Point startPoint, Point goalPoint){

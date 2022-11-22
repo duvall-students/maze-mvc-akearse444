@@ -3,6 +3,7 @@ package searches;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
 
 import application.Maze;
@@ -15,6 +16,8 @@ public abstract class SearchAlgorithm {
 	protected boolean searchOver = false;	// Is search done?
 	protected boolean searchResult = false;	// Was it successful?
 	protected Point current;				// Current point being explored
+	
+	protected HashMap<Point,Point> childParent;
 
 	public SearchAlgorithm(Maze mazeBlocks, Point startPoint, Point goalPoint) {
 		maze = mazeBlocks;
@@ -25,9 +28,7 @@ public abstract class SearchAlgorithm {
 	
 	public boolean step(){
 		// Don't keep computing after goal is reached or determined impossible.
-		if (searchOver) {
-			return whenSearchOver();
-		}
+		whenSearchOver();
 		// Find possible next steps
 		Collection<Point> neighbors = getNeighbors();
 		// Choose one to be a part of the path
@@ -88,7 +89,10 @@ public abstract class SearchAlgorithm {
 	
 	//what to do when search is over
 	protected boolean whenSearchOver() {
-		return searchResult;
+		if (searchOver) {
+			return searchResult;
+		}
+		return searchOver;
 	}
 	
 	//what to do if no next step is found

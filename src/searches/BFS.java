@@ -22,7 +22,10 @@ public class BFS extends SearchAlgorithm{
 
 	@Override
 	protected boolean whenSearchOver() {
-		colorPath();
+		if (searchOver) {
+			colorPath();
+			return searchResult;
+		}
 		return searchOver;
 	}
 
